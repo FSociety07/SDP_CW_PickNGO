@@ -8,7 +8,7 @@ session_start();
 				{
 					header('location:../');
 				}
-include "includes/class-autoload.inc.php";
+// include "includes/class-autoload.inc.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,17 +35,17 @@ include "includes/class-autoload.inc.php";
         <div class="container">
 
                 <div class="logo">
-                    <img src="../images/logo45.png" alt="Logo"  /> <a href="../index.php"><span></span>TYC</a>
+                    <img src="../images/logo.png" alt="Logo"  /> <a href="../index.php"><span></span>Pick & Go</a>
                 </div>
                 
 <div class="top-nav">
     <span class="menu"> </span>
     <ul>
         <li ><a href="index.php">Home</a></li>
-        <!--<li ><a href="faq.php">FAQ</a></li>-->
         <li ><a href="../contact.php">Contact</a></li>
                 <li ><a href="../login.php">Login</a></li>
         <li ><a href="../register.php">Register</a></li>
+        <li ><a href="tracking.php">Track</a></li>
             </ul>
 </div>
 <div class="clearfix"> </div>
@@ -70,10 +70,8 @@ include "includes/class-autoload.inc.php";
             <div class="breadcrumbs-left">
                 <h1>Welcome, <?php 
                             $un=$_SESSION['empusername'];
-                            $query="select * from empuserinfo where username='$un'";
-                            $query_run=mysqli_query($con,$query);
-                            $row = mysqli_fetch_array($query_run);
-                            echo $row['pname'];
+                            
+                            echo $un;
                             ?></h1>
             </div>
             <div class="breadcrumbs-right">
@@ -98,11 +96,9 @@ include "includes/class-autoload.inc.php";
 							<center><img class="avatar" src="../images/avatar.jpg"></center>
 							<form class="myform" action="index.php" method="post">
                                 <br>
-                                <a href="updateloc.php"> <input type="button" id="register-button" value="Update Location" /> </a>
-                                <br>
-                                <a href="addcons.php"><input type="button" name="addc" id="logout-button" value="Attend Pick Up" /></a>
+                                <a href="acceptreq.php"><input type="button" name="addc" id="logout-button" value="Manage Pickup" /></a>
 								<br>
-								<a href="deliver.php"> <input type="button" id="register-button" value="Deliver Item" /> </a>
+								<a href="deliver.php"> <input type="button" id="register-button" name="delivery"  value="Manage Delivery" /> </a>
                                 <br>
 								<input type="submit" name="logout" id="logout-button" value="Logout" />
 								<br>	</form>
@@ -134,28 +130,28 @@ include "includes/class-autoload.inc.php";
                             <div class="top-footer-grid">
                                     <h3>Contact us</h3>
                                     <ul class="address">
-                                        <li><span class="map-pin"> </span><label>AP Kanvide Bhawan <br>3122 3 Chatrawaas <br>Near Powai Lake, Bhopal MP (462003) </label></li>
-                                        <li><span class="mob"> </span>Ph & Fax no - 0995-5377130, Mob- 8000000008</li>
-                                        <li><span class="msg"> </span><a href="#">hello@tyc.in</a></li>
+                                        <li><span class="map-pin"> </span><label>Pick & Go <br>No.12, Galle Road, <br>Colombo 03, Sri Lanka </label></li>
+                                        <li><span class="mob"> </span>Ph & Fax no - 011-2625877, Mob- 0765853625</li>
+                                        <li><span class="msg"> </span><a href="#">www.pickngo.lk</a></li>
                                     </ul>
                             </div>
                             <div class="top-footer-grid">
                                     <h3>Important Links</h3>
                                     <ul class="latest-post">
-                                        <li><a href="../index.php">Home</a> </li>
+                                        <li><a href="index.php">Home</a> </li>
                                          
-                                        <li><a href="../register.php">Register</a> </li>
-                                        <li><a href="../login.php">Login</a> </li>
+                                        <li><a href="register.php">Register</a> </li>
+                                        <li><a href="login.php">Login</a> </li>
                                     </ul>
                             </div>
                             <div class="top-footer-grid">
                                     <h3>Other Links</h3>
                                     <ul class="latest-post">
-                                        <li><a href="../about-us.php">About Us</a> </li>
-                                        <li><a href="../privacy-policy.php">Privacy Policy</a> </li>
-                                        <li><a href="../terms-and-condition.php">Terms & Conditions</a> </li>
-                                        <li><a href="../faq.php">Help & FAQs</a> </li>
-                                        <li><a href="../contact.php">Contact Us</a> </li>
+                                        <li><a href="#">About Us</a> </li>
+                                        <li><a href="#">Privacy Policy</a> </li>
+                                        <li><a href="#">Terms & Conditions</a> </li>
+                                        <li><a href="#">Help & FAQs</a> </li>
+                                        <li><a href="#">Contact Us</a> </li>
                                     </ul>
                             </div>
                             <div class="clear"> </div>
@@ -167,7 +163,8 @@ include "includes/class-autoload.inc.php";
             <div class="container"> 
                     <div class="bottom-footer-left">
                         
-                             <p> &copy; 2017 TYC.in. All rights reserved | Powered by: <a href="http://www.facebook.com/shivtelo" target="_blank">Techvish Technologies</a></p>
+                             <p> &copy; 2022 pick&go.in. All rights reserved | <a href="admin">admin</a></p>
+
                     </div>
                     <div class="clear"> </div>
             </div>

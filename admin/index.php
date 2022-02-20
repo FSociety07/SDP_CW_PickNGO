@@ -9,7 +9,7 @@ else
 	{
 		#	echo '<script type="text/javascript"> alert("All in vain") </script>';
 	}			
-include "includes/class-autoload.inc.php";
+	include "../includes/class-autoload.inc.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,18 +36,37 @@ include "includes/class-autoload.inc.php";
 	
 	if(isset($_POST['submit_btn']))
 	{
-		$password=$_POST['password'];
-		$username=preg_replace('/[^A-Za-z0-9\-]/', '',$_POST['username']);
-				$query="select * from adm where username='$username' and password='$password'";
-				$query_run=mysqli_query($con,$query);
-				if(mysqli_num_rows($query_run)>0)
+	
+				$username=$_POST['username'];
+				$password=$_POST['password'];
+					  $admin=new AdminView();
+					 $results= $admin->CheckAdminLogin($username);
+				    $no=$results->rowCount();
+				
+
+				if($no>0)
 				{
-					$_SESSION['admusername']=$username;
-					$_SESSION['city']='BHOPAL';
+					while ($row= $results->fetch() ) {  
+					 if(password_verify($password,$row['password'])){
+						$_SESSION['admusername']=$username;
+					
 					header('location:index.php');
+
+					}
+					else{
+						
+						echo '<script type="text/javascript"> alert("Invalid UserName or Password!!!") </script>';
+					}
+				}
+					
 				}
 				else
-					header('location:../');	
+				{
+					//wrong credentials
+					echo '<script type="text/javascript"> alert("Sorry, Invalid UserName or Password!!!") </script>';
+				}
+
+					
 		
 	}
 ?>

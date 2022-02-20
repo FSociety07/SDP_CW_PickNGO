@@ -12,6 +12,7 @@ else
 	{
 		
 	}	
+    
 include "includes/class-autoload.inc.php";
 ?>
 <!DOCTYPE html>
@@ -47,7 +48,7 @@ $(function() {
         <div class="container">
                 <!--- logo ----->
                 <div class="logo">
-                    <img src="images/logo45.png" alt="Logo"  /> <a href="index.php"><span></span>TYC</a>
+                    <img src="images/logo.png" alt="Logo"  /> <a href="index.php"><span></span>Pick & Go</a>
                 </div>
                 <!--- logo ----->
 <!--- top-nav ----->
@@ -59,6 +60,7 @@ $(function() {
         <li ><a href="contact.php">Contact</a></li>
                 <li ><a href="login.php">Login</a></li>
         <li class="active" ><a href="register.php">Register</a></li>
+        <li ><a href="tracking.php">Track</a></li>
             </ul>
 </div>
 <div class="clearfix"> </div>
@@ -104,7 +106,7 @@ $(function() {
                 <form name="register" id="register" method="post" action="register.php">
                     <div>
                         <span>I Am</span>
-                        <select name="user_type" class="required">
+                        <select id="user_type" name="user_type" class="required" onchange="areaDisplay()">
                             <option value="">Select Account Type</option>
                             <option value="customer"  >Customer</option>
                             <option value="employee" >Employee</option>
@@ -136,6 +138,50 @@ $(function() {
                         <span>Address</span>
                         <textarea name="address" maxlength="100" cols="5" ></textarea>
                     </div>
+                    <div style='display:none' id="areas">
+                        <span>Area</span>
+                        <select  name="area" >
+                        <?php          
+                        $area=new Areaview ();
+                        $areaResults=$area->ViewAreas();
+                        
+                                     foreach( $areaResults as $myarea){                                        
+                                      echo '<option value="'. $myarea["id"].'">'. $myarea["area"].'</option>';
+                                  }      
+                                ?>
+                        </select>
+                    </div>
+                    <div style='display:none' id="op">
+                        <span>Opeational Center</span>
+                        <select  name="opcenter">
+                        <?php          
+                        $opcenters=new Areaview ();
+                        $opResults=$opcenters->ViewListOPCenters();
+
+                        
+                                     foreach($opResults as $myop){            
+                                                                   
+                                      echo '<option value="'. $myop["id"].'">'. $myop["centerName"].'</option>';
+                                  }      
+                                ?>
+                        </select>
+                    </div>
+                    <script> 
+                    function areaDisplay(){
+                    var area = document.getElementById('areas');
+                    var user_type = document.getElementById('user_type').value;
+                    var op = document.getElementById('op');
+                      if(user_type=="customer"){
+                          area.style.display='block';
+                      }else if(user_type=="employee"){
+                        op.style.display='block';
+                       
+                      }else{
+                        area.style.display='none';
+                        op.style.display='none';
+                      }
+                    }
+                    </script>
                     
                      <input type="submit" Value="Register" name="register_submit" />
                 </form>                
@@ -150,7 +196,9 @@ $(function() {
 											$phoneno=$_POST['phone'];
 											$cname=$_POST['name'];
 											$email=$_POST['email'];
-											$address=$_POST['address'];										
+											$address=$_POST['address'];	
+                                            $area=$_POST['area'];	
+                                            $opcenter=$_POST['opcenter'];						
 											//echo $user_type ;
 											if($user_type=="employee")
 												{
@@ -169,9 +217,9 @@ $(function() {
                                                        
                                                         $ppassword=password_hash($password,PASSWORD_DEFAULT);
                                                         $newCustomer=new  UserContro();
-                                                        $results=$newCustomer->CreateEmployee($username,$ppassword,$cname,$phoneno,$email,$address,$status=0);
+                                                        $results=$newCustomer->CreateEmployee($username,$ppassword,$cname,$phoneno,$email,$address,$opcenter);
 														if($results)
-															echo '<script type="text/javascript"> alert("Registration Successful!! Verify from admin, Go to Login Page") </script>';
+															echo '<script type="text/javascript"> alert("Registration Successful!!, Go to Login Page") </script>';
 														else
 															echo '<script type="text/javascript"> alert("Some Error Occured") </script>';
 														}
@@ -199,7 +247,7 @@ $(function() {
                                                         $ppassword=password_hash($password,PASSWORD_DEFAULT);
 													
                                                         $newCustomer=new  UserContro();
-                                                        $results=$newCustomer->CreateCustomer($username,$ppassword,$cname,$phoneno,$email,$address);
+                                                        $results=$newCustomer->CreateCustomer($username,$ppassword,$cname,$phoneno,$email,$address,$area);
                                                     
                                                         if($results)
 															echo '<script type="text/javascript"> alert("Registration Successful!! Go to Login Page") </script>';
@@ -226,9 +274,9 @@ $(function() {
                             <div class="top-footer-grid">
                                     <h3>Contact us</h3>
                                     <ul class="address">
-                                        <li><span class="map-pin"> </span><label>AP Kanvide Bhawan <br>3122 3 Chatrawaas <br>Near Powai Lake, Bhopal MP (462003) </label></li>
-                                        <li><span class="mob"> </span>Ph & Fax no - 0995-5377130, Mob- 8000000008</li>
-                                        <li><span class="msg"> </span><a href="#">hello@tyc.in</a></li>
+                                        <li><span class="map-pin"> </span><label>Pick & Go <br>No.12, Galle Road, <br>Colombo 03, Sri Lanka </label></li>
+                                        <li><span class="mob"> </span>Ph & Fax no - 011-2625877, Mob- 0765853625</li>
+                                        <li><span class="msg"> </span><a href="#">www.pickngo.lk</a></li>
                                     </ul>
                             </div>
                             <div class="top-footer-grid">
@@ -243,11 +291,11 @@ $(function() {
                             <div class="top-footer-grid">
                                     <h3>Other Links</h3>
                                     <ul class="latest-post">
-                                        <li><a href="about-us.php">About Us</a> </li>
-                                        <li><a href="privacy-policy.php">Privacy Policy</a> </li>
-                                        <li><a href="terms-and-condition.php">Terms & Conditions</a> </li>
-                                        <li><a href="faq.php">Help & FAQs</a> </li>
-                                        <li><a href="contact.php">Contact Us</a> </li>
+                                        <li><a href="#">About Us</a> </li>
+                                        <li><a href="#">Privacy Policy</a> </li>
+                                        <li><a href="#">Terms & Conditions</a> </li>
+                                        <li><a href="#">Help & FAQs</a> </li>
+                                        <li><a href="#">Contact Us</a> </li>
                                     </ul>
                             </div>
                             <div class="clear"> </div>
@@ -259,7 +307,8 @@ $(function() {
             <div class="container"> 
                     <div class="bottom-footer-left">
                         
-                             <p> &copy; 2017 TYC.in. All rights reserved | Powered by: <a href="http://www.facebook.com/shivtelo" target="_blank">Techvish Technologies</a></p>
+                             <p> &copy; 2022 pick&go.in. All rights reserved | <a href="admin">admin</a></p>
+
                     </div>
                     <div class="clear"> </div>
             </div>

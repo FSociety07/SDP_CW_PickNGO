@@ -13,10 +13,7 @@ class UserView extends User{
         $result=$this->VerifyCustomerEmail($email);
         return $result;
     }
-    // public function Allusers(){
-    //     $results=$this->DisplayUsers();
-    //     return $results;
-    // }
+ 
     public function CutomerUserName($username){
         $results=$this->VerifyCustomerUsername($username);
         return $results;
@@ -25,9 +22,21 @@ class UserView extends User{
         $results=$this->VerifyEmployeeUsername($username);
         return $results;
     }
-    // public function ViewUser($username){
-    //     $results=$this->SearchUsers($username);
-    //     return $results;
-    // }
+    public function ReceiverLastId(){
+        $results=$this->getReceiverLastId();
+        return $results;
+    }
+
+    public function CenterArea($username){
+        $results=$this->getOPcenterArea($username);
+        return $results;
+
+    }
+
+    public function dstCenterArea($area){
+        $results=$this->getDstOPcenterArea($area);
+        return $results;
+
+    }
 
 }
