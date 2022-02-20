@@ -98,9 +98,15 @@ include "../includes/class-autoload.inc.php";
             <div class="about-grids-row1">
             
 	                   <div id="abc">
+<<<<<<< HEAD
 	<center><h2>Request Transit</h2></center>
 
 	<center><img class="avatar" src="../images/avatar.jpg"></center>
+=======
+	<center><h2>Request Pickup</h2></center>
+
+	<center><img class="avatar" src="../images/customer.jpg"></center>
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
 	<form class="myform" action="request.php" method="post">
         <fieldset >
         <legend>Receiver Information</legend>

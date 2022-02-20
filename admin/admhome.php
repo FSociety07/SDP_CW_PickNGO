@@ -9,7 +9,7 @@ if(isset($_SESSION['admusername']))
 	{
 		header('location:index.php');
 	}			
-require '../dbconfig/config.php';
+include "../includes/class-autoload.inc.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,12 +25,9 @@ require '../dbconfig/config.php';
 	</h3></center>
 	<center><img class="avatar" src="../images/avatar.jpg"></center>
 	<form class="myform" action="admhome.php" method="post">
-		<a href="addcity.php"><input type="button" id="register-button" value="Add City" /></a>
+		<a href="manageemp.php"><input type="button" id="register-button" value="Manage Employee" /></a>
 		<br>
-		<a href="conectc.php"><input type="button" id="login-button" value="Connect" /></a>
-		<br>
-		<br>
-		<a href="browsec.php"><input type="button" id="register-button" value="Browse Cities"></a>
+		<a href="conectc.php"><input type="button" id="login-button" value="Manage OP centers" /></a>
 		<br>
 		<br>
 		<input type="submit" name="logout" id="logout-button" value="Logout" />

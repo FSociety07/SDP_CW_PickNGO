@@ -8,9 +8,13 @@ else if(isset($_SESSION['empusername']))
 			{
 				header('location:employee');
 			}	
+else if(isset($_SESSION['admusername']))
+{
+    header('location:admin');
+}	
 else
 	{
-		#	echo '<script type="text/javascript"> alert("All in vain") </script>';
+	
 	}			
 include "includes/class-autoload.inc.php";
 ?>
@@ -18,7 +22,7 @@ include "includes/class-autoload.inc.php";
 <!DOCTYPE HTML>
 <html>
 <head>
-        <title>Home | TYC</title>
+        <title>Home</title>
 <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <!--<script src="js/jquery.min.js"></script>-->
@@ -112,8 +116,10 @@ $(function() {
                      
                                             if($no>0)
                                             {
-                                                while ($row= $results->fetch() ) {  
-                                                 if(password_verify($password,$row['password'])){
+                                                while ($row= $results->fetch() ) {
+                                                    
+                                                if($row['status']==1){
+                                                  if(password_verify($password,$row['password'])){
                                                      $username=$row['username'];
                                                      header('location:employee');
                                                 $_SESSION['empusername']=$username;
@@ -123,6 +129,11 @@ $(function() {
                                                     
                                                     echo '<script type="text/javascript"> alert("Invalid UserName or Password!!!") </script>';
                                                 }
+                                            }else{
+                                                echo '<script type="text/javascript"> alert("Employee account not verified, Please contact admin!!!") </script>';
+                                            }
+                                        
+                                                
                                             }
                                                 
                                             }
@@ -170,17 +181,7 @@ $(function() {
 <!---- banner --->
         </div>
     </div>
-<!---- header ----->
-        <!---- welcome-Note ---->
-<!--		<div class="welcome-note">
-			<div class="container">
-				<div class="wel-head text-center">
-					<h3>WE Are <span>M</span>oto</h3>
-					<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</p>
-				</div>
-			</div>
-		</div>-->
-		<!---- welcome-Note ---->
+
 <div class="footer">
     <div class="top-footer">
             <div class="container">

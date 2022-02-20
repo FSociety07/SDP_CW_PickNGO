@@ -32,6 +32,7 @@ include "../includes/class-autoload.inc.php";
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,900italic,900,700italic,700,500italic,500,400italic' rel='stylesheet' type='text/css' />
 
     </head>
+<<<<<<< HEAD
 <style>
 /* .edit{
     background-color: rgb(66, 105, 231);
@@ -39,6 +40,9 @@ include "../includes/class-autoload.inc.php";
     border-color: rgb(166, 169, 179);
 } */
 </style>
+=======
+
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
 <body>
 
 <div class="header  about-head "  >
@@ -223,10 +227,13 @@ include "../includes/class-autoload.inc.php";
                            }
                     
                         }
+<<<<<<< HEAD
                     
                         
                         
                         
+=======
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
                         
                         ?>
                         

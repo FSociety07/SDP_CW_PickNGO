@@ -68,11 +68,19 @@ protected function getRequestLastId(){
   }
 
   protected function getTrackingStatus($trackingCode){
+<<<<<<< HEAD
     $sql="SELECT acceptedrequest.id,pickuprequests.tracking,customers.username as Sender,employee.username as Deliver,employee.phoneNo,receiver.name as Receiver,pickuprequests.status from acceptedrequest 
+=======
+    $sql="SELECT acceptedrequest.id,pickuprequests.tracking,customers.username as Sender,employee.username as Deliver,employee.phoneNo,receiver.name as Receiver,pickuprequests.status,delivery.deliveryProof from acceptedrequest 
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
     left join pickuprequests on acceptedrequest.requestedId=pickuprequests.id 
     left join customers on pickuprequests.customerId=customers.id 
     left JOIN employee on acceptedrequest.pickupEmpId=employee.id 
     left join receiver on pickuprequests.receiverId=receiver.id 
+<<<<<<< HEAD
+=======
+    left JOIN delivery on acceptedrequest.requestedId=delivery.pickupRequestId 
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
     where pickuprequests.tracking=?";
     $stmt=$this->connect()->prepare($sql);    
     $stmt->execute([$trackingCode]);

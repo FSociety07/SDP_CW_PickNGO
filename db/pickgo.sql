@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
 -- Generation Time: Feb 20, 2022 at 05:20 AM
+=======
+-- Generation Time: Feb 20, 2022 at 10:40 AM
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.15
 
@@ -38,6 +42,7 @@ CREATE TABLE `acceptedrequest` (
 --
 
 INSERT INTO `acceptedrequest` (`id`, `requestedId`, `pickupEmpId`) VALUES
+<<<<<<< HEAD
 (7, 16, 3),
 (30, 16, 3),
 (36, 16, 3),
@@ -51,6 +56,10 @@ INSERT INTO `acceptedrequest` (`id`, `requestedId`, `pickupEmpId`) VALUES
 (34, 17, 3),
 (12, 17, 4),
 (28, 19, 3);
+=======
+(40, 16, 3),
+(22, 17, 3);
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
 
 -- --------------------------------------------------------
 
@@ -106,12 +115,21 @@ CREATE TABLE `centers` (
 --
 
 INSERT INTO `centers` (`id`, `centerName`, `address`, `phoneNo`, `areaId`) VALUES
+<<<<<<< HEAD
 (1, 'Colombo 01 Operational Center', 'No 11, Temple street, Colombo 01.', 114568236, 1),
 (8, 'Colombo 02 Operational Center', 'No 87A, Main road, Colombo 02.', 115874621, 2),
 (9, 'Colombo 03 Operational Center', 'No 14/1, Stacy road, Colombo 03.', 118793645, 3),
 (10, 'Colombo 04 Operational Center', 'No 332, Francis road, Colombo 04.', 118786364, 4),
 (11, 'Colombo 05 Operational Center', 'No 452, Park road, Colombo 05.', 117875421, 5),
 (12, 'Colombo 06 Operational Center', 'No 39A, Layards broadway, Colombo 06.', 114687845, 6);
+=======
+(1, 'Colombo 01 OP center', 'No 11, Temple street, Colombo 01.', 114568236, 1),
+(8, 'Colombo 02 OP center', 'No 87A, Main road, Colombo 02.', 115874621, 2),
+(9, 'Colombo 03 OP center', 'No 14/1, Stacy road, Colombo 03.', 118793645, 3),
+(10, 'Colombo 04 OP center', 'No 332, Francis road, Colombo 04.', 118786364, 4),
+(11, 'Colombo 05 OP center', 'No 452, Park road, Colombo 05.', 117875421, 5),
+(12, 'Colombo 06 OP center', 'No 39A, Layards broadway, Colombo 06.', 114687845, 6);
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
 
 -- --------------------------------------------------------
 
@@ -159,8 +177,12 @@ CREATE TABLE `delivery` (
 --
 
 INSERT INTO `delivery` (`id`, `pickupRequestId`, `deliveredDateTime`, `deliveryProof`, `DeliveryEmpId`) VALUES
+<<<<<<< HEAD
 (8, 16, '2022-02-19 11:30:55', 'Activity Diagram2.png', 5),
 (9, 19, '2022-02-19 04:13:19', 'Activity Diagram2.png', 5);
+=======
+(12, 16, '2022-02-20 06:55:22', 'Activity Diagram1.png', 5);
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
 
 -- --------------------------------------------------------
 
@@ -184,9 +206,16 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `username`, `password`, `eName`, `phoneNo`, `email`, `address`, `opCenterId`) VALUES
+<<<<<<< HEAD
 (3, 'sawnthar', '$2y$10$XfMdP/wrv4OSKCGL/fiKuuGPrlV.OnhFls1aHDvnAi9l/oI8zGDKW', 'sawntharan', 765853625, 'sawntharan07@gmail.com', 'No,15,Rathmalana', 10),
 (4, 'kamal', '$2y$10$AcigFZWdGFSTouIddTCSGu4fsFWK95MYE1HkOBN4j3Wl7SyX5ozbi', 'kamal k', 715853635, 'kamal@gmail.com', 'No,1/1, Galle Road, Moratuwa', 11),
 (5, 'kumar', '$2y$10$G/I5ruFbu.lFLp.GROF5veQdPe9DY2aUFnXh1U0KNPGkL8bU8n77K', 'kumar', 765853625, 'kumar@gmail.com', 'kumar', 11);
+=======
+(3, 'sawnthar', '$2y$10$XfMdP/wrv4OSKCGL/fiKuuGPrlV.OnhFls1aHDvnAi9l/oI8zGDKW', 'sawntharan', 765853625, 'sawntharan07@gmail.com', 'No,15,Rathmalana', 11),
+(4, 'kamal', '$2y$10$AcigFZWdGFSTouIddTCSGu4fsFWK95MYE1HkOBN4j3Wl7SyX5ozbi', 'kamal k', 715853635, 'kamal@gmail.com', 'No,1/1, Galle Road, Moratuwa', 11),
+(5, 'kumar', '$2y$10$G/I5ruFbu.lFLp.GROF5veQdPe9DY2aUFnXh1U0KNPGkL8bU8n77K', 'kumar', 765853625, 'kumar@gmail.com', 'kumar', 11),
+(6, 'raj', '$2y$10$JyE4li9vStHtkzOJ8dc9IO.oQ5w.KTmBlTixhdFgsox.K98YcUtaa', 'rajkumar', 715853625, 'raj@gmail.com', 'No.10, Mount Lavinia', 8);
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
 
 -- --------------------------------------------------------
 
@@ -456,13 +485,21 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `delivery`
 --
 ALTER TABLE `delivery`
+<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+=======
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
+<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+=======
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
 
 --
 -- AUTO_INCREMENT for table `package`

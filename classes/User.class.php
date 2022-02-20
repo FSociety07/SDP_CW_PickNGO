@@ -7,10 +7,10 @@ protected function setCustomer($username,$password,$cname,$phoneno,$email,$addre
   return $result=$stmt->execute([$username,$password,$cname,$phoneno,$email,$address,$area]);
 }
 
-protected function setEmployee($username,$password,$ename,$phoneno,$email,$address,$status){
-  $sql="INSERT INTO employee(username,password,eName,phoneNo,email,address,status)VALUES (?,?,?,?,?,?,?)";
+protected function setEmployee($username,$password,$ename,$phoneno,$email,$address,$opcenter){
+  $sql="INSERT INTO employee(username,password,eName,phoneNo,email,address,opCenterId)VALUES (?,?,?,?,?,?,?)";
   $stmt=$this->connect()->prepare($sql);
-  return $result=$stmt->execute([$username,$password,$ename,$phoneno,$email,$address,$status]);
+  return $result=$stmt->execute([$username,$password,$ename,$phoneno,$email,$address,$opcenter]);
 
 }
 
@@ -70,6 +70,7 @@ protected function VerifyEmployeeUsername($username){
   return $stmt; 
 }
 
+<<<<<<< HEAD
 // protected function DisplayUsers(){
 //   $sql="SELECT * FROM users";
 //   $stmt=$this->connect()->query($sql);      
@@ -87,6 +88,8 @@ protected function VerifyEmployeeUsername($username){
 //   $results=$stmt->fetch();
 //   return $results;
 // }
+=======
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
 protected function UpdateCustomer($name,$phone,$email,$password,$address,$area,$username){
   $sql="UPDATE customers SET cName=?,phoneNo=?,email=?,password=?,address=?,areaId=? WHERE username=?";
   $stmt=$this->connect()->prepare($sql);    
@@ -114,6 +117,7 @@ protected function getDstOPcenterArea($area){
 }
 
 }
+<<<<<<< HEAD
 // protected function SearchUsers($username){
 //   $sql="SELECT * FROM users WHERE UserName LIKE '%$username%' or Email LIKE '%$username%' or MobileNo LIKE '%$username%' or FirstName LIKE '%$username%' or LastName LIKE '%$username%'";
 //   $stmt=$this->connect()->prepare($sql);    
@@ -122,3 +126,5 @@ protected function getDstOPcenterArea($area){
 //   return $results;
 // }
 // }
+=======
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc

@@ -1,18 +1,6 @@
 <?php 
-session_start();
-// if(isset($_SESSION['username']))
-// 			{
-// 				header('location:customer');
-// 			}
-// else if(isset($_SESSION['empusername']))
-// 			{
-// 				header('location:employee');
-// 			}	
-// else
-// 	{
-// 		#	echo '<script type="text/javascript"> alert("All in vain") </script>';
-// 	}			
-    include "includes/class-autoload.inc.php";
+session_start();		
+include "includes/class-autoload.inc.php";
 ?><!DOCTYPE html>
 <html>
 <head>

@@ -42,7 +42,6 @@ session_start();
     <span class="menu"> </span>
     <ul>
         <li ><a href="index.php">Home</a></li>
-        <!--<li ><a href="faq.php">FAQ</a></li>-->
         <li ><a href="../contact.php">Contact</a></li>
                 <li ><a href="../login.php">Login</a></li>
         <li ><a href="../register.php">Register</a></li>
@@ -97,11 +96,17 @@ session_start();
 							<center><img class="avatar" src="../images/avatar.jpg"></center>
 							<form class="myform" action="index.php" method="post">
                                 <br>
+<<<<<<< HEAD
                                 <a href="updateloc.php"> <input type="button" id="register-button" value="Update Location" /> </a>
                                 <br>
                                 <a href="acceptreq.php"><input type="button" name="addc" id="logout-button" value="Manage Pickup" /></a>
 								<br>
 								<a href="deliver.php"> <input type="button" id="register-button" name="delivery" value="Manage Delivery" /> </a>
+=======
+                                <a href="acceptreq.php"><input type="button" name="addc" id="logout-button" value="Manage Pickup" /></a>
+								<br>
+								<a href="deliver.php"> <input type="button" id="register-button" name="delivery"  value="Manage Delivery" /> </a>
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
                                 <br>
 								<input type="submit" name="logout" id="logout-button" value="Logout" />
 								<br>	</form>

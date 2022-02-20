@@ -71,7 +71,10 @@ input[name=request] {
     <span class="menu"> </span>
     <ul>
         <li ><a href="index.php">Home</a></li>
+<<<<<<< HEAD
         <!--<li ><a href="faq.php">FAQ</a></li>-->
+=======
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
         <li ><a href="../contact.php">Contact</a></li>
                 <li ><a href="../login.php">Login</a></li>
         <li ><a href="../register.php">Register</a></li>

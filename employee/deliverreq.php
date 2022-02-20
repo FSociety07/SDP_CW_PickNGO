@@ -184,9 +184,31 @@ input[name=request] {
                                             if($run){
                                                 move_uploaded_file($fileTmpName,$path);
                                                 $statusUpdate=new PickupRequestContro();
+<<<<<<< HEAD
                                                 $statusResults=$statusUpdate->UpdateRequestStatus($status=3,$req);
 
                                                 echo '<script>alert("Delivery Proof Uploaded Successfully")</script>'; 
+=======
+                                                $statusResults=$statusUpdate->UpdateRequestStatus($status=3,$req);                                                
+
+                                                echo '<script>alert("Delivery Proof Uploaded Successfully")</script>'; 
+                                                
+                                                $statusUpdat=new PickupRequestContro();                                            
+                                                $Emails= $statusUpdat->ctrlGetEmail($req);
+
+                                                $requestDetailss=$statusUpdat->ctrlgetTracking($req);
+                             
+                                                $myId = implode($requestDetailss);
+                                                
+                                                $sub='Successful Delivery';
+                                                $msg="Hi ,item has been Delivered successfully.\n tracking ID:".$myId.". and giving us the opprtunity to serve you continuously...";
+                                                $hed='from: no-reply';
+                                              
+                                                foreach($Emails as $Emailrow){
+                                                    $sent=mail($Emailrow['customerEmail'],$sub,$msg,$hed);
+                                                    $sent=mail($Emailrow['ReceiverEmail'],$sub,$msg,$hed);
+                                                    }
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
                                             }
                                             else{
                                                 echo '<script>alert("Error..Please try Again....")</script>'; 

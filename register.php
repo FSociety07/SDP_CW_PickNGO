@@ -140,7 +140,11 @@ $(function() {
                     </div>
                     <div style='display:none' id="areas">
                         <span>Area</span>
+<<<<<<< HEAD
                         <select  name="area" class="required" >
+=======
+                        <select  name="area" >
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
                         <?php          
                         $area=new Areaview ();
                         $areaResults=$area->ViewAreas();
@@ -151,14 +155,44 @@ $(function() {
                                 ?>
                         </select>
                     </div>
+<<<<<<< HEAD
+=======
+                    <div style='display:none' id="op">
+                        <span>Opeational Center</span>
+                        <select  name="opcenter">
+                        <?php          
+                        $opcenters=new Areaview ();
+                        $opResults=$opcenters->ViewListOPCenters();
+
+                        
+                                     foreach($opResults as $myop){            
+                                                                   
+                                      echo '<option value="'. $myop["id"].'">'. $myop["centerName"].'</option>';
+                                  }      
+                                ?>
+                        </select>
+                    </div>
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
                     <script> 
                     function areaDisplay(){
                     var area = document.getElementById('areas');
                     var user_type = document.getElementById('user_type').value;
+<<<<<<< HEAD
                       if(user_type=="customer"){
                           area.style.display='block';
                       }else{
                         area.style.display='none';
+=======
+                    var op = document.getElementById('op');
+                      if(user_type=="customer"){
+                          area.style.display='block';
+                      }else if(user_type=="employee"){
+                        op.style.display='block';
+                       
+                      }else{
+                        area.style.display='none';
+                        op.style.display='none';
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
                       }
                     }
                     </script>
@@ -177,7 +211,12 @@ $(function() {
 											$cname=$_POST['name'];
 											$email=$_POST['email'];
 											$address=$_POST['address'];	
+<<<<<<< HEAD
                                             $area=$_POST['area'];							
+=======
+                                            $area=$_POST['area'];	
+                                            $opcenter=$_POST['opcenter'];						
+>>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
 											//echo $user_type ;
 											if($user_type=="employee")
 												{
@@ -196,9 +235,9 @@ $(function() {
                                                        
                                                         $ppassword=password_hash($password,PASSWORD_DEFAULT);
                                                         $newCustomer=new  UserContro();
-                                                        $results=$newCustomer->CreateEmployee($username,$ppassword,$cname,$phoneno,$email,$address,$status=0);
+                                                        $results=$newCustomer->CreateEmployee($username,$ppassword,$cname,$phoneno,$email,$address,$opcenter);
 														if($results)
-															echo '<script type="text/javascript"> alert("Registration Successful!! Verify from admin, Go to Login Page") </script>';
+															echo '<script type="text/javascript"> alert("Registration Successful!!, Go to Login Page") </script>';
 														else
 															echo '<script type="text/javascript"> alert("Some Error Occured") </script>';
 														}
