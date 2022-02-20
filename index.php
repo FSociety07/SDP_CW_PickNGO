@@ -44,7 +44,7 @@ $(function() {
 
     </head>
     <body>
-    <!---- container ---->
+    <!---- container delete ---->
 <!---- header ----->
 <div class="header "   style="min-height: 660px;" >
         <div class="container">
