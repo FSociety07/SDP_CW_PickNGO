@@ -139,9 +139,8 @@ include "../includes/class-autoload.inc.php";
                                 </div>
 								<?php
 									if(isset($_POST['active'])){
+
 										$statusUpdate=new AdminContro();
-										
-			
 										$statusResults=$statusUpdate->UpdateEmployeeStatus($status=1,$_POST['active']);
 
 										if($statusResults){
