@@ -32,10 +32,6 @@ require '../dbconfig/config.php';
 				}}
 				else
 					echo "the query was wrong ;)";
-				
-				
-
-
 
  ?>
  <br>

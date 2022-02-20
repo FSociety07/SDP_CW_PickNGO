@@ -50,7 +50,7 @@ $(function() {
         <div class="container">
                 <!--- logo ----->
                 <div class="logo">
-                    <img src="images/logo45.png" alt="Logo"  /> <a href="index.php"><span></span>TYC</a>
+                    <img src="images/logo.png" alt="Logo"  /> <a href="index.php"><span></span>Pick & Go</a>
                 </div>
                 <!--- logo ----->
 <!--- top-nav ----->
@@ -62,6 +62,7 @@ $(function() {
         <li ><a href="contact.php">Contact</a></li>
                 <li ><a href="#login_form">Login</a></li>
         <li ><a href="register.php">Register</a></li>
+        <li ><a href="tracking.php" name="tracking">Track</a></li>
 
             </ul>
 
@@ -90,6 +91,8 @@ $(function() {
             <div class="row1"><input type="submit" Value="Login" name="login_submit" /></div>
             <div class="row1"><a href="forgot-password.php">Forgot Password?</a></div>
         </form>
+
+       
         
  <?php 
                                 if(isset($_POST['login_submit']))
@@ -160,8 +163,10 @@ $(function() {
                                 }
                             ?>
     </div>
+
     
 </div>
+
 <!---- banner --->
         </div>
     </div>
@@ -183,9 +188,9 @@ $(function() {
                             <div class="top-footer-grid">
                                     <h3>Contact us</h3>
                                     <ul class="address">
-                                        <li><span class="map-pin"> </span><label>AP Kanvide Bhawan <br>3122 3 Chatrawaas <br>Near Powai Lake, Bhopal MP (462003) </label></li>
-                                        <li><span class="mob"> </span>Ph & Fax no - 0995-5377130, Mob- 8000000008</li>
-                                        <li><span class="msg"> </span><a href="#">hello@tyc.in</a></li>
+                                        <li><span class="map-pin"> </span><label>Pick & Go <br>No.12, Galle Road, <br>Colombo 03, Sri Lanka </label></li>
+                                        <li><span class="mob"> </span>Ph & Fax no - 011-2625877, Mob- 0765853625</li>
+                                        <li><span class="msg"> </span><a href="#">www.pickngo.lk</a></li>
                                     </ul>
                             </div>
                             <div class="top-footer-grid">
@@ -200,11 +205,11 @@ $(function() {
                             <div class="top-footer-grid">
                                     <h3>Other Links</h3>
                                     <ul class="latest-post">
-                                        <li><a href="about-us.php">About Us</a> </li>
-                                        <li><a href="privacy-policy.php">Privacy Policy</a> </li>
-                                        <li><a href="terms-and-condition.php">Terms & Conditions</a> </li>
-                                        <li><a href="faq.php">Help & FAQs</a> </li>
-                                        <li><a href="contact.php">Contact Us</a> </li>
+                                        <li><a href="#">About Us</a> </li>
+                                        <li><a href="#">Privacy Policy</a> </li>
+                                        <li><a href="#">Terms & Conditions</a> </li>
+                                        <li><a href="#">Help & FAQs</a> </li>
+                                        <li><a href="#">Contact Us</a> </li>
                                     </ul>
                             </div>
                             <div class="clear"> </div>
@@ -216,7 +221,7 @@ $(function() {
             <div class="container"> 
                     <div class="bottom-footer-left">
                         
-                             <p> &copy; 2017 TYC.in. All rights reserved | Powered by: <a href="http://www.facebook.com/shivtelo" target="_blank">Techvish Technologies</a>  <a href="admin">admin</a></p>
+                             <p> &copy; 2022 pick&go.in. All rights reserved | <a href="admin">admin</a></p>
 
                     </div>
                     <div class="clear"> </div>

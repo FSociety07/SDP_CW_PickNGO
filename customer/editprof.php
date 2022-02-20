@@ -1,4 +1,5 @@
 <?php 
+
 session_start();
 	if(isset($_SESSION['username']))
 				{
@@ -8,7 +9,13 @@ session_start();
 				{
 					header('location:../');
 				}
-require '../dbconfig/config.php';
+include "../includes/class-autoload.inc.php";
+$cname="";
+$phone="";
+$email="";
+$password="";
+$cpassword="";					
+$address="";		
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,7 +43,7 @@ require '../dbconfig/config.php';
         <div class="container">
                 <!--- logo ----->
                 <div class="logo">
-                    <img src="../images/logo45.png" alt="Logo"  /> <a href="../index.php"><span></span>TYC</a>
+                    <img src="../images/logo.png" alt="Logo"  /> <a href="../index.php"><span></span>Pick & Go</a>
                 </div>
                 <!--- logo ----->
 <!--- top-nav ----->
@@ -48,6 +55,7 @@ require '../dbconfig/config.php';
         <li ><a href="../contact.php">Contact</a></li>
                 <li ><a href="../login.php">Login</a></li>
         <li ><a href="../register.php">Register</a></li>
+        <li ><a href="tracking.php">Track</a></li>
             </ul>
 </div>
 <div class="clearfix"> </div>
@@ -72,10 +80,20 @@ require '../dbconfig/config.php';
             <div class="breadcrumbs-left">
                 <h1>Welcome, <?php 
                             $un=$_SESSION['username'];
-                            $query="select * from userinfo where username='$un'";
-                            $query_run=mysqli_query($con,$query);
-                            $row = mysqli_fetch_array($query_run);
-                            echo $row['pname'];
+                            $EmployeeLogin=new UserView();
+                            $results=$EmployeeLogin->CheckCustomerLogin($un);
+                            while ($resultById= $results->fetch()) {  
+                            $Username=$resultById['cName'];
+                            $Password=$resultById["password"];
+                            $CName=$resultById["cName"];
+                            $PhoneNo=$resultById["phoneNo"];
+                            $Email=$resultById["email"]; 
+                            $Address=$resultById["address"];   
+                            $areas=$resultById["areaId"];   
+                          
+                            }
+                            echo $un;
+                            
                             ?></h1>
             </div>
             <div class="breadcrumbs-right">
@@ -99,154 +117,100 @@ require '../dbconfig/config.php';
                 <form name="register" id="register" method="post" action="editprof.php">
                             <div>
                             <span>Name</span>
-                            <input type="text" name="pname" maxlength="30" value=<?php 
-                            $un=$_SESSION['username'];
-                            $query="select * from userinfo where username='$un'";
-                            $query_run=mysqli_query($con,$query);
-                            $row = mysqli_fetch_array($query_run);
-                            echo '"'.$row['pname'].'"';
-                            ?> class="required" />
+                            <input type="text" name="pname" maxlength="30"value="<?php echo $Username;?>" class="required" />
                             </div>
                             <div>
                             <span>Mobile</span>
-                            <input type="text" name="phone" maxlength="10" minlength="10" value=<?php 
-                            $un=$_SESSION['username'];
-                            $query="select * from userinfo where username='$un'";
-                            $query_run=mysqli_query($con,$query);
-                            $row = mysqli_fetch_array($query_run);
-                            echo '"'.$row['phno'].'"';
-                            ?> class="required digits" />
+                            <input type="text" name="phone" maxlength="10" minlength="10" value="<?php echo $PhoneNo;?>" class="required digits" />
                             </div>
                             <div>
                           <span>Email</span>
-                            <input type="email" name="eml" maxlength="50" value=<?php 
-                            $un=$_SESSION['username'];
-                            $query="select * from userinfo where username='$un'";
-                            $query_run=mysqli_query($con,$query);
-                            $row = mysqli_fetch_array($query_run);
-                            echo '"'.$row['eml'].'"';
-                            ?> class="required" />
+                            <input type="email" name="email" maxlength="50" value="<?php echo $Email;?>" class="required" />
                                             </div>
                                             <div>
                                                 <span>Password</span>
-                                                <input type="password" name="password" maxlength="40" value=<?php 
-                            $un=$_SESSION['username'];
-                            $query="select * from userinfo where username='$un'";
-                            $query_run=mysqli_query($con,$query);
-                            $row = mysqli_fetch_array($query_run);
-                            echo '"'.preg_replace('/^shiv/', '',$row['password']).'"';
-                            ?> class="required" />
+                                                <input type="password" name="password" maxlength="40"  class="required" />
                                             </div>
                                             <div>
                                                 <span>Confirm Password</span>
-                                                <input type="password" name="cpassword" maxlength="40" value=<?php 
-                            $un=$_SESSION['username'];
-                            $query="select * from userinfo where username='$un'";
-                            $query_run=mysqli_query($con,$query);
-                            $row = mysqli_fetch_array($query_run);
-                            echo '"'.preg_replace('/^shiv/', '',$row['password']).'"';
-                            ?> class="required" />
+                                                <input type="password" name="cpassword" maxlength="40"  class="required" />
                                             </div>
                                             <div>
                                                 <span>Address</span>
-                                                <textarea name="addr" maxlength="100" cols="5" placeholder=<?php 
-                            $un=$_SESSION['username'];
-                            $query="select * from userinfo where username='$un'";
-                            $query_run=mysqli_query($con,$query);
-                            $row = mysqli_fetch_array($query_run);
-                            echo '"'.$row['address'].'"';
-                            ?>></textarea>
+                                              
+                                                <textarea name="address" class="required"><?php echo $Address; ?></textarea>
                                             </div>
                                             
-                                            <div>
+                                            <!-- <div>
                                                 <span>City</span>
                                                 <select name="city" id="city" class="input_long required" >
                                                     <option value="">--Select--</option>
                                                     <?php 
-                                                        $query="select * from city";
-                                                                $query_run=mysqli_query($con,$query);
-                                                                    while($row = mysqli_fetch_array($query_run)){
-                                                                        if($row['constat']==1)
-                                                                        echo "<option value='" . $row['cityname'] . "'>" . $row['cityname'] . "</option>";}
+                                                        // $query="select * from city";
+                                                        //         $query_run=mysqli_query($con,$query);
+                                                        //             while($row = mysqli_fetch_array($query_run)){
+                                                        //                 if($row['constat']==1)
+                                                        //                 echo "<option value='" . $row['cityname'] . "'>" . $row['cityname'] . "</option>";}
                                                      ?>
                                                      </select>
-                                            </div>
-                                            <input type="submit" Value="Save" name="save_submit" />
-
-
-
-
-
-
-
-
-                                                             </form>                
-                                    <?php 
-                                        if(isset($_POST['save_submit']))
-                                        {
-                                        #echo '<script type="text/javascript"> alert("Sign Up Button Clicked") </script>';
-                                            $username=$_SESSION['username'];
-                                            $password=$_POST['password'];
-                                            $cpassword=$_POST['cpassword'];
-                                            $phno=$_POST['phone'];
-                                            $pname=$_POST['pname'];
-                                            $eml=$_POST['eml'];
-                                            $addr=$_POST['addr'];
-                                            $city=$_POST['city'];
-                                            //echo $user_type ;
-                                                    if($password==$cpassword)
-                                                    {
-                                                        $query="select * from userinfo where username='$username'";
-                                                        $query_run=mysqli_query($con,$query);
-                                                        
-                                                        if(mysqli_num_rows($query_run)>0)
-                                                        {
-                                                            //Already a user
-                                                            $query2="DELETE FROM userinfo WHERE username='".$username."'";
-                                                            $query_run2=mysqli_query($con,$query2);
-                                                            $conc="shiv";
-															$mpassword=$conc.$password;
-															$password=$mpassword;
-                                                            $query2="insert into userinfo values('$username','$password','$pname','$phno','$eml','$addr','$city')";
-                                                        $query_run2=mysqli_query($con,$query2);
-                                                        if($query_run2)
-                                                           { echo '<script type="text/javascript"> alert("Update Successful!! Reload To See Changes") </script>';
-                                                             }
-                                                        else
-                                                            echo '<script type="text/javascript"> alert("Some Error Occured") </script>';
-                                                        }
-                                                        else
-                                                        {
-                                                        }
-                                                    }
-                                                    else
-                                                        echo '<script type="text/javascript"> alert("Error Passwords Don\'t Match") </script>';
+                                            </div> -->
+                                            <div id="areas">
+                                                <span>Area</span>
+                                                <select  name="area" class="required" value="<?php echo $areas;?>">
+                                                <?php          
+                                                $area=new Areaview ();
+                                                $areaResults=$area->ViewAreas();
                                                 
+                                                            foreach( $areaResults as $myarea){                                        
+                                                            echo '<option value="'. $myarea["id"].'">'. $myarea["area"].'</option>';
+                                                        }      
+                                                        ?>
+                                                </select>
+                                             </div>
+                                            <input type="submit" Value="Save" name="save_submit" />
+                                        </form>                
+                                    <?php 
+                                        if(isset($_POST['save_submit'])){                                    
+										
+                                         
+                                            $cname=$_POST['pname'];
+                                            $phone=$_POST['phone'];
+                                            $email=$_POST['email'];
+											$password=$_POST['password'];
+											$cpassword=$_POST['cpassword'];					
+											$address=$_POST['address'];	
+                                            $area=$_POST['area'];
+                                            								
+											//echo $user_type ;	
+                                            if(!(empty($password) && empty($cpassword))){												
+													if($password==$cpassword)
+													{                                                      
+                                                        $ppassword=password_hash($password,PASSWORD_DEFAULT);
+                                                        $newCustomer=new  UserContro();
+                                                        $results=$newCustomer->editCustomer($cname,$phone,$email,$ppassword,$address,$area,$un);
+														if($results)
+															echo '<script type="text/javascript"> alert("Customer Profile Updated Successfully!! ") </script>';
+														else
+															echo '<script type="text/javascript"> alert("Some Error Occured") </script>';
+														
+														
+														
+													}
+													else
+														echo '<script type="text/javascript"> alert("Error Passwords Don\'t Match") </script>';
+											
+												
+										}else{
+                                                   $newCustomer=new  UserContro();
+                                                   $results=$newCustomer->editCustomer($cname,$phone,$email,$Password,$address,$area,$un);
+														if($results)
+															echo '<script type="text/javascript"> alert("Customer Profile Updated Successfully!!") </script>';
+														else
+															echo '<script type="text/javascript"> alert("Some Error Occured") </script>';
+
                                         }
+                                    }
                                     ?>
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 						</div>
             </div>
         </div>
@@ -263,28 +227,28 @@ require '../dbconfig/config.php';
                             <div class="top-footer-grid">
                                     <h3>Contact us</h3>
                                     <ul class="address">
-                                        <li><span class="map-pin"> </span><label>AP Kanvide Bhawan <br>3122 3 Chatrawaas <br>Near Powai Lake, Bhopal MP (462003) </label></li>
-                                        <li><span class="mob"> </span>Ph & Fax no - 0995-5377130, Mob- 8000000008</li>
-                                        <li><span class="msg"> </span><a href="#">hello@tyc.in</a></li>
+                                        <li><span class="map-pin"> </span><label>Pick & Go <br>No.12, Galle Road, <br>Colombo 03, Sri Lanka </label></li>
+                                        <li><span class="mob"> </span>Ph & Fax no - 011-2625877, Mob- 0765853625</li>
+                                        <li><span class="msg"> </span><a href="#">www.pickngo.lk</a></li>
                                     </ul>
                             </div>
                             <div class="top-footer-grid">
                                     <h3>Important Links</h3>
                                     <ul class="latest-post">
-                                        <li><a href="../index.php">Home</a> </li>
+                                        <li><a href="index.php">Home</a> </li>
                                          
-                                        <li><a href="../register.php">Register</a> </li>
-                                        <li><a href="../login.php">Login</a> </li>
+                                        <li><a href="register.php">Register</a> </li>
+                                        <li><a href="login.php">Login</a> </li>
                                     </ul>
                             </div>
                             <div class="top-footer-grid">
                                     <h3>Other Links</h3>
                                     <ul class="latest-post">
-                                        <li><a href="../about-us.php">About Us</a> </li>
-                                        <li><a href="../privacy-policy.php">Privacy Policy</a> </li>
-                                        <li><a href="../terms-and-condition.php">Terms & Conditions</a> </li>
-                                        <li><a href="../faq.php">Help & FAQs</a> </li>
-                                        <li><a href="../contact.php">Contact Us</a> </li>
+                                        <li><a href="#">About Us</a> </li>
+                                        <li><a href="#">Privacy Policy</a> </li>
+                                        <li><a href="#">Terms & Conditions</a> </li>
+                                        <li><a href="#">Help & FAQs</a> </li>
+                                        <li><a href="#">Contact Us</a> </li>
                                     </ul>
                             </div>
                             <div class="clear"> </div>
@@ -296,7 +260,8 @@ require '../dbconfig/config.php';
             <div class="container"> 
                     <div class="bottom-footer-left">
                         
-                             <p> &copy; 2017 TYC.in. All rights reserved | Powered by: <a href="http://www.facebook.com/shivtelo" target="_blank">Techvish Technologies</a></p>
+                             <p> &copy; 2022 pick&go.in. All rights reserved | <a href="admin">admin</a></p>
+
                     </div>
                     <div class="clear"> </div>
             </div>

@@ -1,10 +1,10 @@
 <?php
 class User extends Dbh{
 
-protected function setCustomer($username,$password,$cname,$phoneno,$email,$address){
-  $sql="INSERT INTO customers(username,password,cName,phoneNo,email,address)VALUES (?,?,?,?,?,?)";
+protected function setCustomer($username,$password,$cname,$phoneno,$email,$address,$area){
+  $sql="INSERT INTO customers(username,password,cName,phoneNo,email,address,areaId)VALUES (?,?,?,?,?,?,?)";
   $stmt=$this->connect()->prepare($sql);
-  return $result=$stmt->execute([$username,$password,$cname,$phoneno,$email,$address]);
+  return $result=$stmt->execute([$username,$password,$cname,$phoneno,$email,$address,$area]);
 }
 
 protected function setEmployee($username,$password,$ename,$phoneno,$email,$address,$status){
@@ -13,6 +13,24 @@ protected function setEmployee($username,$password,$ename,$phoneno,$email,$addre
   return $result=$stmt->execute([$username,$password,$ename,$phoneno,$email,$address,$status]);
 
 }
+
+protected function setReceiver($name,$address,$phone,$email,$area){
+ $sql="INSERT INTO receiver(name,address,phoneNo,email,area)VALUES (?,?,?,?,?)";
+ $stmt=$this->connect()->prepare($sql);
+ $results=$stmt->execute([$name,$address,$phone,$email,$area]);
+ return $results;
+}
+
+protected function getReceiverLastId(){
+  $sql="SELECT MAX(id) FROM receiver";
+  $stmt=$this->connect()->prepare($sql);
+  $stmt->execute();
+  $results=$stmt->fetch();
+  return  $results;
+ }
+
+
+
 protected function LoginEmployee($username){
   $sql="SELECT * FROM employee WHERE username=?";
   $stmt=$this->connect()->prepare($sql);
@@ -26,6 +44,7 @@ protected function LoginCustomer($username){
   $stmt->execute([$username]);
   return  $stmt;
 }
+
 protected function UpdateCustomerPassword($password,$email){
   $sql="UPDATE customers SET password=? WHERE email=?";
   $stmt=$this->connect()->prepare($sql);
@@ -50,7 +69,7 @@ protected function VerifyEmployeeUsername($username){
   $stmt=$this->connect()->query($sql);
   return $stmt; 
 }
-}
+
 // protected function DisplayUsers(){
 //   $sql="SELECT * FROM users";
 //   $stmt=$this->connect()->query($sql);      
@@ -68,12 +87,33 @@ protected function VerifyEmployeeUsername($username){
 //   $results=$stmt->fetch();
 //   return $results;
 // }
-// protected function UpdateUser($username,$email,$firstname,$lastname,$upassword,$mobile,$id){
-//   $sql="UPDATE users SET UserName=?,Email=?,FirstName=?,LastName=?,UPassword=?,MobileNo=? WHERE id=?";
-//   $stmt=$this->connect()->prepare($sql);    
-//   $results=$stmt->execute([$username,$email,$firstname,$lastname,$upassword,$mobile,$id]);    
-//   return $results;
-// }
+protected function UpdateCustomer($name,$phone,$email,$password,$address,$area,$username){
+  $sql="UPDATE customers SET cName=?,phoneNo=?,email=?,password=?,address=?,areaId=? WHERE username=?";
+  $stmt=$this->connect()->prepare($sql);    
+  $results=$stmt->execute([$name,$phone,$email,$password,$address,$area,$username]);    
+  return $results;
+}
+
+protected function getOPcenterArea($username){
+  $sql="SELECT centers.id FROM centers
+  LEFT JOIN customers ON customers.areaId=centers.areaId 
+  LEFT JOIN areas ON areas.id=centers.areaId
+  WHERE customers.username=?";
+  $stmt=$this->connect()->prepare($sql);    
+  $stmt->execute([$username]);
+  return $stmt->fetch();   
+}
+protected function getDstOPcenterArea($area){
+  $sql="SELECT centers.id FROM centers 
+  LEFT JOIN receiver ON receiver.area=centers.areaId
+  WHERE receiver.area=?";
+  $stmt=$this->connect()->prepare($sql);    
+  $stmt->execute([$area]);
+  return $stmt->fetch();
+
+}
+
+}
 // protected function SearchUsers($username){
 //   $sql="SELECT * FROM users WHERE UserName LIKE '%$username%' or Email LIKE '%$username%' or MobileNo LIKE '%$username%' or FirstName LIKE '%$username%' or LastName LIKE '%$username%'";
 //   $stmt=$this->connect()->prepare($sql);    

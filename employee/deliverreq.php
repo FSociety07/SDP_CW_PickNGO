@@ -8,8 +8,28 @@ session_start();
 				{
 					header('location:../');
 				}
-// include "includes/class-autoload.inc.php";
+include "../includes/class-autoload.inc.php";
+$update=false;
+$id=0;
+$CustomerName="";
+$PhoneNo="";
+$Address="";
+$ReqId="";
 ?>
+<?php
+ if(isset($_GET['del'])){
+    $update=true;
+    $Id=$_GET['del']; 
+    $request=new PickupRequestContro ();   
+    $resultById= $request->DisplayRequestDetails($Id);
+    $ReqId=$resultById['id'];
+    $CustomerName=$resultById["customerName"];
+    $PhoneNo=$resultById["phoneNo"];
+    $Address=$resultById["address"];
+
+  }
+
+  ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +39,7 @@ session_start();
 <!--<script src="../js/jquery.min.js"></script>-->
 <script src="../js/jquery-1.8.3.js"></script>
  <!-- Custom Theme files -->
-<link rel="stylesheet" type="text/css" href="../css/style2.css">
+
 <link href="../css/style.css" rel='stylesheet' type='text/css' />
  <!-- Custom Theme files -->
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -27,17 +47,26 @@ session_start();
 <!----webfonts--->
 <!--<link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css' />-->
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,900italic,900,700italic,700,500italic,500,400italic' rel='stylesheet' type='text/css' />
-
+<!---//webfonts--->
     </head>
+    <style> 
+input[name=request] {
+  background-color: #F7F7F7;
+  border: none;
+  text-decoration: none;
+}
+</style>
 <body>
-
+    <!---- container ---->
+<!---- header ----->
 <div class="header  about-head "  >
         <div class="container">
-
+                <!--- logo ----->
                 <div class="logo">
                     <img src="../images/logo.png" alt="Logo"  /> <a href="../index.php"><span></span>Pick & Go</a>
                 </div>
-                
+                <!--- logo ----->
+<!--- top-nav ----->
 <div class="top-nav">
     <span class="menu"> </span>
     <ul>
@@ -46,7 +75,7 @@ session_start();
         <li ><a href="../contact.php">Contact</a></li>
                 <li ><a href="../login.php">Login</a></li>
         <li ><a href="../register.php">Register</a></li>
-        <li ><a href="tracking.php">Track</a></li>
+      
             </ul>
 </div>
 <div class="clearfix"> </div>
@@ -71,7 +100,6 @@ session_start();
             <div class="breadcrumbs-left">
                 <h1>Welcome, <?php 
                             $un=$_SESSION['empusername'];
-                            
                             echo $un;
                             ?></h1>
             </div>
@@ -85,38 +113,89 @@ session_start();
         </div>
     </div>
     <!--- bradcrumbs ---->
-</div>
+
+
+
 <div class="about-top-grids">
     <div class="container">
-        <!---- about-grids ---->
-        <div class="about-grids">
-            <div class="about-grids-row1">
+        <div class="contact-grids">
+            <div class="contact-right">
+              
+                <form method="post" action="deliverreq.php" enctype="multipart/form-data">
+                <fieldset >
+                   <legend>Request Information</legend>
+                   <input type="hidden" name="id" value="<?php echo $Id;?>">  
+                            <div>
+                            <span>Request ID</span>
+                                 <input type="text" name="request"  class="required" value="<?php echo $ReqId;?>"  readonly/>
+                            </div>
+                            <div>
+                            <span>Customer Name</span>
+                                <input type="text" name="name"  class="required"  value="<?php echo $CustomerName;?>"disabled />
+                            </div>
+                            <div>
+                            <span>Mobile</span>
+                                <input type="text" name="phone"  class="required digits"  value="<?php echo $PhoneNo;?>"disabled  />
+                            </div>
+                            <div>
+                                <span>Address</span>
+                                <textarea name="addr" maxlength="100" cols="5" disabled ><?php echo $Address; ?></textarea>
+                            </div>
+                            </fieldset ><br>
+
+                            <fieldset>
+                            <legend>Delivery Proof Details</legend>
+                            <div>
+                            <span>Photo Proof</span>
+                            <input type="file" id="file" name="file" class="file" required > 
+                            </div> 
+                            <div>      
+                                 <input type="submit" Value="Save" name="save_submit" />
+                            </form>                
+                                    <?php 
+                                        if(isset($_POST['save_submit'])){    
+                                            $fileName = $_FILES['file']['name'];
+                                            $fileTmpName = $_FILES['file']['tmp_name'];
+                                            $path = "../files/".$fileName;
+                                            $deliveryDateTime= date('Y-m-d h:i:s', time()); 
+                                            $req=$_POST['request'];
+
+                                            $allowed = array('jpg', 'png','jpeg');
+                                            $ext = pathinfo( $fileName, PATHINFO_EXTENSION);
+                                            if (!in_array($ext, $allowed)){
+                                                echo '<script>alert("You can only upload Image Format File only....")</script>'; 
+                                            }else{
+                                                $employeeId=new UserView();
+                                                $getEmpId=$employeeId->CheckEmployeeLogin($un);
+                    
+                                                while ($resultById= $getEmpId->fetch()) {  
+                    
+                                                $empID=$resultById["id"];
+                                                
+                                                
+                                            
+                                                }
+                                               
+                                            $delivery=new DeliveryContro();
+                                      
+                                            $run = $delivery->CreateDelivery($req,$deliveryDateTime,$fileName,$empID);
+                                         
+                                       
+                                            if($run){
+                                                move_uploaded_file($fileTmpName,$path);
+                                                $statusUpdate=new PickupRequestContro();
+                                                $statusResults=$statusUpdate->UpdateRequestStatus($status=3,$req);
+
+                                                echo '<script>alert("Delivery Proof Uploaded Successfully")</script>'; 
+                                            }
+                                            else{
+                                                echo '<script>alert("Error..Please try Again....")</script>'; 
+                                            }
+                                            }
+                                            
+                                          }
+                                    ?>
             
-	                   <div id="abc">
-							<center><h2>What are you here for?</h2></center>
-							<center><img class="avatar" src="../images/avatar.jpg"></center>
-							<form class="myform" action="index.php" method="post">
-                                <br>
-                                <a href="updateloc.php"> <input type="button" id="register-button" value="Update Location" /> </a>
-                                <br>
-                                <a href="acceptreq.php"><input type="button" name="addc" id="logout-button" value="Manage Pickup" /></a>
-								<br>
-								<a href="deliver.php"> <input type="button" id="register-button" name="delivery" value="Manage Delivery" /> </a>
-                                <br>
-								<input type="submit" name="logout" id="logout-button" value="Logout" />
-								<br>	</form>
-								<?php
-								
-								if(isset($_POST['logout']))
-								{ 
-										if(isset($_SESSION['empusername']))
-											{
-											$_SESSION = [];
-											session_destroy();
-											}
-											header('location:index.php');
-								}
-								?>	
 						</div>
             </div>
         </div>

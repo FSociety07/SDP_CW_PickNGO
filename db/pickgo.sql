@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 14, 2022 at 07:58 PM
+-- Generation Time: Feb 20, 2022 at 05:20 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.15
 
@@ -24,6 +24,37 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `acceptedrequest`
+--
+
+CREATE TABLE `acceptedrequest` (
+  `id` int(11) NOT NULL,
+  `requestedId` int(11) NOT NULL,
+  `pickupEmpId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `acceptedrequest`
+--
+
+INSERT INTO `acceptedrequest` (`id`, `requestedId`, `pickupEmpId`) VALUES
+(7, 16, 3),
+(30, 16, 3),
+(36, 16, 3),
+(38, 16, 3),
+(40, 16, 3),
+(20, 17, 3),
+(22, 17, 3),
+(24, 17, 3),
+(26, 17, 3),
+(32, 17, 3),
+(34, 17, 3),
+(12, 17, 4),
+(28, 19, 3);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `admin`
 --
 
@@ -36,6 +67,29 @@ CREATE TABLE `admin` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `areas`
+--
+
+CREATE TABLE `areas` (
+  `id` int(11) NOT NULL,
+  `area` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `areas`
+--
+
+INSERT INTO `areas` (`id`, `area`) VALUES
+(1, 'Colombo 1'),
+(2, 'Colombo 2'),
+(3, 'Colombo 3'),
+(4, 'Colombo 4'),
+(5, 'Colombo 5'),
+(6, 'Colombo 6');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `centers`
 --
 
@@ -44,8 +98,20 @@ CREATE TABLE `centers` (
   `centerName` varchar(50) NOT NULL,
   `address` varchar(100) NOT NULL,
   `phoneNo` int(10) NOT NULL,
-  `districtId` int(11) NOT NULL
+  `areaId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `centers`
+--
+
+INSERT INTO `centers` (`id`, `centerName`, `address`, `phoneNo`, `areaId`) VALUES
+(1, 'Colombo 01 Operational Center', 'No 11, Temple street, Colombo 01.', 114568236, 1),
+(8, 'Colombo 02 Operational Center', 'No 87A, Main road, Colombo 02.', 115874621, 2),
+(9, 'Colombo 03 Operational Center', 'No 14/1, Stacy road, Colombo 03.', 118793645, 3),
+(10, 'Colombo 04 Operational Center', 'No 332, Francis road, Colombo 04.', 118786364, 4),
+(11, 'Colombo 05 Operational Center', 'No 452, Park road, Colombo 05.', 117875421, 5),
+(12, 'Colombo 06 Operational Center', 'No 39A, Layards broadway, Colombo 06.', 114687845, 6);
 
 -- --------------------------------------------------------
 
@@ -60,16 +126,19 @@ CREATE TABLE `customers` (
   `cName` varchar(100) NOT NULL,
   `phoneNo` int(10) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `address` varchar(200) NOT NULL
+  `address` varchar(255) NOT NULL,
+  `areaId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`id`, `username`, `password`, `cName`, `phoneNo`, `email`, `address`) VALUES
-(6, 'dinesh', '$2y$10$lcXYULRL0xFQhXeXQ48iEOLm3wox3q.mfRap8jDfXgj4J8Z2YGqPO', 'dineshkumar', 765853625, 'kartheepan@gmail.com', '123456'),
-(7, 'karthee', '$2y$10$t68AMRsfY/epP/t55iRLtO7tuZRuUqFFNaIZSOib4WS4Ijvnksi2u', 'kartheepan', 765853625, 'kartheepan2211@gmail.com', '123456');
+INSERT INTO `customers` (`id`, `username`, `password`, `cName`, `phoneNo`, `email`, `address`, `areaId`) VALUES
+(6, 'dinesh', '$2y$10$jeWlaCB0.gflLLYYMDEfLespfH4bIsNgVBvL.Z7LgWXMD9vzc14sm', 'karthikkkk', 765853625, 'kartheepan@gmail.com', 'updated', 6),
+(7, 'karthee', '$2y$10$mmsHFKMaj9bq6bXPYTBMLOstPfI5szYQCXJVdsu6sxZD1ccf5FRu2', 'kartheepan', 765853625, 'kartheepan2211@gmail.com', 'No.12,Galle Road,Rathmalana. try change', 1),
+(8, 'john', '$2y$10$h4Jp2rXuxxXV0P9vRNvTcOxx0gmZFsv63nTLXuWreh6vIsPSPrUFa', 'johncena', 1234567891, 'j@mail.com', 'Something', 5),
+(9, 'TestUser', '$2y$10$pUH0L4SmybYxqE3baJsqYeQVGKpEwU.PiWMfQuVqy9/q4i5GM0z72', 'ValidTestData22', 2147483647, 'tested2@mail.com', 'Changed password. Test22', 3);
 
 -- --------------------------------------------------------
 
@@ -79,25 +148,19 @@ INSERT INTO `customers` (`id`, `username`, `password`, `cName`, `phoneNo`, `emai
 
 CREATE TABLE `delivery` (
   `id` int(11) NOT NULL,
-  `packageId` int(11) NOT NULL,
   `pickupRequestId` int(11) NOT NULL,
-  `currentLocation` varchar(50) NOT NULL,
   `deliveredDateTime` datetime NOT NULL,
-  `trackingCode` varchar(10) NOT NULL,
-  `deliveryProof` int(11) NOT NULL,
-  `opCenter` int(11) NOT NULL
+  `deliveryProof` varchar(255) DEFAULT NULL,
+  `DeliveryEmpId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `district`
+-- Dumping data for table `delivery`
 --
 
-CREATE TABLE `district` (
-  `id` int(11) NOT NULL,
-  `dName` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `delivery` (`id`, `pickupRequestId`, `deliveredDateTime`, `deliveryProof`, `DeliveryEmpId`) VALUES
+(8, 16, '2022-02-19 11:30:55', 'Activity Diagram2.png', 5),
+(9, 19, '2022-02-19 04:13:19', 'Activity Diagram2.png', 5);
 
 -- --------------------------------------------------------
 
@@ -113,7 +176,6 @@ CREATE TABLE `employee` (
   `phoneNo` int(10) NOT NULL,
   `email` varchar(50) NOT NULL,
   `address` varchar(200) NOT NULL,
-  `status` int(1) NOT NULL,
   `opCenterId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -121,8 +183,10 @@ CREATE TABLE `employee` (
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`id`, `username`, `password`, `eName`, `phoneNo`, `email`, `address`, `status`, `opCenterId`) VALUES
-(3, 'sawnthar', '$2y$10$XfMdP/wrv4OSKCGL/fiKuuGPrlV.OnhFls1aHDvnAi9l/oI8zGDKW', 'sawntharan', 765853625, 'sawntharan07@gmail.com', 'No,15,Rathmalana', 0, NULL);
+INSERT INTO `employee` (`id`, `username`, `password`, `eName`, `phoneNo`, `email`, `address`, `opCenterId`) VALUES
+(3, 'sawnthar', '$2y$10$XfMdP/wrv4OSKCGL/fiKuuGPrlV.OnhFls1aHDvnAi9l/oI8zGDKW', 'sawntharan', 765853625, 'sawntharan07@gmail.com', 'No,15,Rathmalana', 10),
+(4, 'kamal', '$2y$10$AcigFZWdGFSTouIddTCSGu4fsFWK95MYE1HkOBN4j3Wl7SyX5ozbi', 'kamal k', 715853635, 'kamal@gmail.com', 'No,1/1, Galle Road, Moratuwa', 11),
+(5, 'kumar', '$2y$10$G/I5ruFbu.lFLp.GROF5veQdPe9DY2aUFnXh1U0KNPGkL8bU8n77K', 'kumar', 765853625, 'kumar@gmail.com', 'kumar', 11);
 
 -- --------------------------------------------------------
 
@@ -133,10 +197,22 @@ INSERT INTO `employee` (`id`, `username`, `password`, `eName`, `phoneNo`, `email
 CREATE TABLE `package` (
   `id` int(11) NOT NULL,
   `weight` int(10) NOT NULL,
+  `size` varchar(100) NOT NULL,
   `pickupTime` datetime NOT NULL,
-  `rate` varchar(10) NOT NULL,
+  `rate` int(10) NOT NULL,
   `pickupRequestId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `package`
+--
+
+INSERT INTO `package` (`id`, `weight`, `size`, `pickupTime`, `rate`, `pickupRequestId`) VALUES
+(4, 10, 'small', '2022-02-19 07:24:15', 1100, 16),
+(5, 7, 'medium', '2022-02-19 04:06:31', 900, 19),
+(6, 10, 'small', '2022-02-19 08:56:25', 1100, 16),
+(7, 10, 'small', '2022-02-19 08:59:06', 1100, 16),
+(8, 10, 'small', '2022-02-19 09:00:43', 1100, 16);
 
 -- --------------------------------------------------------
 
@@ -162,12 +238,59 @@ CREATE TABLE `payment` (
 CREATE TABLE `pickuprequests` (
   `id` int(11) NOT NULL,
   `requestedDateTime` datetime NOT NULL,
-  `pickedDateTime` datetime NOT NULL,
-  `location` varchar(50) NOT NULL,
-  `pickupAvailability` int(1) NOT NULL,
+  `pickupAvailability` datetime NOT NULL,
+  `schedulePickupTime` datetime DEFAULT NULL,
   `customerId` int(11) NOT NULL,
-  `receivingOperationCenter` int(11) NOT NULL
+  `srcOPcenter` int(11) NOT NULL,
+  `destinationOPcenter` int(11) NOT NULL,
+  `receiverId` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `tracking` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pickuprequests`
+--
+
+INSERT INTO `pickuprequests` (`id`, `requestedDateTime`, `pickupAvailability`, `schedulePickupTime`, `customerId`, `srcOPcenter`, `destinationOPcenter`, `receiverId`, `status`, `tracking`) VALUES
+(16, '2022-02-16 06:28:06', '2022-02-26 22:58:00', NULL, 7, 10, 11, 35, 2, 24575),
+(17, '2022-02-16 07:55:08', '2022-02-23 00:25:00', '2022-02-05 00:48:00', 7, 10, 1, 36, -1, 52596),
+(18, '2022-02-16 09:10:40', '2022-02-19 01:40:00', NULL, 6, 12, 11, 37, -1, 33281),
+(19, '2022-02-19 03:55:34', '2022-02-25 20:24:00', NULL, 7, 1, 11, 38, 3, 45407);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `receiver`
+--
+
+CREATE TABLE `receiver` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `phoneNo` int(10) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `area` int(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `receiver`
+--
+
+INSERT INTO `receiver` (`id`, `name`, `address`, `phoneNo`, `email`, `area`) VALUES
+(26, 'dinesh', 'No.12,Galle Road,Rathmalana', 765853625, 'dinesh@gmail.com', 3),
+(27, 'rcvrtest', 'testAddress', 1234567890, '123saw@mail.com', 6),
+(28, 'rcvrtest', 'testAddress', 1234567890, '123saw@mail.com', 6),
+(29, 'rcvrTest', 'teastAddress', 1234561234, 'asas@mail.com', 6),
+(30, 'rcvrTest', 'teastAddress', 1234561234, 'asas@mail.com', 6),
+(31, 'testrcvr2', 'testAddress2', 1231231313, 'gg@m.com', 5),
+(32, 'testRcvr3', 'testAdrs3', 2147483647, 'three@mail.com', 3),
+(33, 'testRcvr4', 'testAdres4', 2147483647, 'four@mail.com', 4),
+(34, 'testReceiv', 'five', 1231231231, 'five@mail.com', 5),
+(35, 'fiveRcvr', 'five', 1234561231, 'wyvtycagttaxnubzni@kvhrs.com', 5),
+(36, 'Anush', 'testing track code', 1234567890, 'wyvtycagttaxnubzni@kvhrs.com', 1),
+(37, 'changedreq', 'changed?', 1231231231, 'change@maio.com', 1),
+(38, 'Receiverte', 'asdress', 1231231321, 'mail@mail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -200,9 +323,23 @@ CREATE TABLE `vehicletype` (
 --
 
 --
+-- Indexes for table `acceptedrequest`
+--
+ALTER TABLE `acceptedrequest`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `requestedId` (`requestedId`,`pickupEmpId`),
+  ADD KEY `pickupEmpId` (`pickupEmpId`);
+
+--
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `areas`
+--
+ALTER TABLE `areas`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -210,28 +347,22 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `centers`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `district` (`districtId`);
+  ADD UNIQUE KEY `district` (`areaId`);
 
 --
 -- Indexes for table `customers`
 --
 ALTER TABLE `customers`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `areaId` (`areaId`);
 
 --
 -- Indexes for table `delivery`
 --
 ALTER TABLE `delivery`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `packageId` (`packageId`),
   ADD KEY `pickupRequestId` (`pickupRequestId`),
-  ADD KEY `opCenter` (`opCenter`);
-
---
--- Indexes for table `district`
---
-ALTER TABLE `district`
-  ADD PRIMARY KEY (`id`);
+  ADD KEY `opCenter` (`DeliveryEmpId`);
 
 --
 -- Indexes for table `employee`
@@ -261,8 +392,17 @@ ALTER TABLE `payment`
 --
 ALTER TABLE `pickuprequests`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `receivingOperationCenter` (`receivingOperationCenter`),
-  ADD KEY `customerId` (`customerId`);
+  ADD KEY `receivingOperationCenter` (`srcOPcenter`),
+  ADD KEY `customerId` (`customerId`),
+  ADD KEY `receiverId` (`receiverId`),
+  ADD KEY `destinationOPcenter` (`destinationOPcenter`);
+
+--
+-- Indexes for table `receiver`
+--
+ALTER TABLE `receiver`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `area` (`area`);
 
 --
 -- Indexes for table `vehicle`
@@ -283,52 +423,64 @@ ALTER TABLE `vehicletype`
 --
 
 --
+-- AUTO_INCREMENT for table `acceptedrequest`
+--
+ALTER TABLE `acceptedrequest`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+
+--
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `areas`
+--
+ALTER TABLE `areas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `centers`
 --
 ALTER TABLE `centers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `delivery`
 --
 ALTER TABLE `delivery`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `district`
---
-ALTER TABLE `district`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `pickuprequests`
 --
 ALTER TABLE `pickuprequests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `receiver`
+--
+ALTER TABLE `receiver`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `vehicle`
@@ -341,18 +493,30 @@ ALTER TABLE `vehicle`
 --
 
 --
+-- Constraints for table `acceptedrequest`
+--
+ALTER TABLE `acceptedrequest`
+  ADD CONSTRAINT `acceptedrequest_ibfk_2` FOREIGN KEY (`pickupEmpId`) REFERENCES `employee` (`id`),
+  ADD CONSTRAINT `acceptedrequest_ibfk_3` FOREIGN KEY (`requestedId`) REFERENCES `pickuprequests` (`id`);
+
+--
 -- Constraints for table `centers`
 --
 ALTER TABLE `centers`
-  ADD CONSTRAINT `centers_ibfk_1` FOREIGN KEY (`districtId`) REFERENCES `district` (`id`);
+  ADD CONSTRAINT `centers_ibfk_1` FOREIGN KEY (`areaId`) REFERENCES `areas` (`id`);
+
+--
+-- Constraints for table `customers`
+--
+ALTER TABLE `customers`
+  ADD CONSTRAINT `customers_ibfk_1` FOREIGN KEY (`areaId`) REFERENCES `areas` (`id`);
 
 --
 -- Constraints for table `delivery`
 --
 ALTER TABLE `delivery`
-  ADD CONSTRAINT `delivery_ibfk_1` FOREIGN KEY (`packageId`) REFERENCES `package` (`id`),
   ADD CONSTRAINT `delivery_ibfk_2` FOREIGN KEY (`pickupRequestId`) REFERENCES `pickuprequests` (`id`),
-  ADD CONSTRAINT `delivery_ibfk_3` FOREIGN KEY (`opCenter`) REFERENCES `centers` (`id`);
+  ADD CONSTRAINT `delivery_ibfk_3` FOREIGN KEY (`DeliveryEmpId`) REFERENCES `employee` (`id`);
 
 --
 -- Constraints for table `employee`
@@ -378,7 +542,15 @@ ALTER TABLE `payment`
 --
 ALTER TABLE `pickuprequests`
   ADD CONSTRAINT `pickuprequests_ibfk_1` FOREIGN KEY (`customerId`) REFERENCES `customers` (`id`),
-  ADD CONSTRAINT `pickuprequests_ibfk_2` FOREIGN KEY (`receivingOperationCenter`) REFERENCES `centers` (`id`);
+  ADD CONSTRAINT `pickuprequests_ibfk_2` FOREIGN KEY (`receiverId`) REFERENCES `receiver` (`id`),
+  ADD CONSTRAINT `pickuprequests_ibfk_3` FOREIGN KEY (`destinationOPcenter`) REFERENCES `centers` (`id`),
+  ADD CONSTRAINT `pickuprequests_ibfk_4` FOREIGN KEY (`srcOPcenter`) REFERENCES `centers` (`id`);
+
+--
+-- Constraints for table `receiver`
+--
+ALTER TABLE `receiver`
+  ADD CONSTRAINT `receiver_ibfk_1` FOREIGN KEY (`area`) REFERENCES `areas` (`id`);
 
 --
 -- Constraints for table `vehicle`

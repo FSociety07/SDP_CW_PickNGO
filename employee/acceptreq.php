@@ -103,7 +103,7 @@ include "../includes/class-autoload.inc.php";
             <div class="about-grids-row1">
             
 	                   <div id="abc">
-							<center><h2>View Deliveries</h2></center>
+							<center><h2>View Requests</h2></center>
 							<center><img class="avatar" src="../images/avatar.jpg"></center>
                             <form  action="acceptreq.php" method="post"> 
                                         
@@ -118,50 +118,47 @@ include "../includes/class-autoload.inc.php";
                                     <thead>
                                     <tr>
                                         <th>Requested Id</th>
-                                        <th>Receiver Name</th>
-                                        <th>Receiver PhoneNo</th>
-                                        <th>Receiver Address</th>              
+                                        <th>Pickup Time</th>
+                                        <th>Customer Name</th>
+                                        <th>Customer Address</th>
+                                        <th>Customer PhoneNo</th>
                                         <th>Action</th>
                                         
                                     </tr>
                                     <?php
-                                    $empOPcenter=new UserView();
-                                    $empOPcenterID=$empOPcenter->CheckEmployeeLogin($un);
-
-                                while ($resultById= $empOPcenterID->fetch()) {  
-
-                                    $opCenter=$resultById["opCenterId"];
-                                
-                                // echo "<option value=".$PhoneNo['id'].">". $PhoneNo."</option>";
-                                }
-
-
-                                    $DstOPcenter=new PickupRequestContro();
-                                    $empOPcenterID=$DstOPcenter->DisplayDSTcenter($opCenter,$status=2);
+                                       $empOPcenter=new UserView();
+                                       $empOPcenterID=$empOPcenter->CheckEmployeeLogin($un);
        
-                                  
-                              
+                                   while ($resultById= $empOPcenterID->fetch()) {  
+                                 
+                                       $opCenter=$resultById["opCenterId"];
+                                     
+                                     // echo "<option value=".$PhoneNo['id'].">". $PhoneNo."</option>";
+                                   }
+                                    $request=new PickupRequestContro();
+                                    $requestDetails=$request->acceptReq($opCenter,$status=3);
                                 
-                                    if($empOPcenterID){
-                                        foreach($empOPcenterID as $rows){ 
+                                    if($requestDetails){
+                                        foreach($requestDetails as $rows){ 
                                             ?>
                                     </thead>
                                     <tbody>
                                     <tr>
                                         <td><?php echo $rows["id"]?></td>
-                                        <td><?php echo $rows["receiverName"]?></td>
-                                        <td><?php echo $rows["receiverPhone"]?></td>
-                                        <td><?php echo $rows["receiverAddress"]?></td>
-                                       
+                                        <td><?php echo $rows["pickupAvailability"]?></td>
+                                        <td><?php echo $rows["username"]?></td>
+                                        <td><?php echo $rows["address"]?></td>
+                                        <td><?php echo $rows["phoneNo"]?></td>
+
                                         <?php if($rows["status"]==-1): ?>
                                        <td><button type="submit" class="btn btn-danger" name="accept" value="<?php echo $rows["id"];?>"  >Pending</button></td>
                                             <?php elseif($rows["status"]==1): ?>
-                                             <td> <a href="pickupreq.php?edit=<?php echo $rows["id"];?>"  class="btn btn-success">Accepted</a></td>
+                                             <td> <a href="pickupreq.php?edit=<?php echo $rows["id"];?>"  name="accepted" class="btn btn-success">Accepted</a></td>
                                             <td><a href="" class="btn btn-success" data-toggle="modal" data-target="#modalLoginForm" name="schedule" value="<?php echo $rows["id"];?>">Schedule Time</a></td>
                                             <?php elseif($rows["status"]==2): ?>
-                                            <td><a href="deliverreq.php?del=<?php echo $rows["id"];?>" name="pickedup" class="btn btn-info">Pickedup</a></td>
+                                            <td><button type="submit" class="btn btn-info" name="pickedup" >Pickedup</button></td>
                                             <?php elseif($rows["status"]==3): ?>
-                                            <td><button type="submit" class="btn btn-success" name="accepted" >Delivered</button></td>
+                                            <td><button type="submit" class="btn btn-success" name="delivered" >Delivered</button></td>
                                             <?php else:?>
                                            
                                         <?php endif;?>  
@@ -184,48 +181,48 @@ include "../includes/class-autoload.inc.php";
 </div>
 <?php
 
-                        //     $employeeId=new UserView();
-                        //     $getEmpId=$employeeId->CheckEmployeeLogin($un);
+                            $employeeId=new UserView();
+                            $getEmpId=$employeeId->CheckEmployeeLogin($un);
 
-                        //     while ($resultById= $getEmpId->fetch()) {  
+                            while ($resultById= $getEmpId->fetch()) {  
 
-                        //     $empID=$resultById["id"];
+                            $empID=$resultById["id"];
                         
-                        //     }
+                            }
 
-                        //    if(isset($_POST['accept'])){
-                        //     $statusUpdate=new PickupRequestContro();
+                           if(isset($_POST['accept'])){
+                            $statusUpdate=new PickupRequestContro();
                             
 
-                        //    $statusResults=$statusUpdate->UpdateRequestStatus($status=1,$_POST['accept']);
-                        //    $statusUpdat=new PickupRequestContro();
-                        //    $empActReq = $statusUpdat->setAcceptedreq($_POST['accept'],$empID);
-                        //    $Emails= $statusUpdat->ctrlGetEmail($_POST['accept']);
+                           $statusResults=$statusUpdate->UpdateRequestStatus($status=1,$_POST['accept']);
+                           $statusUpdat=new PickupRequestContro();
+                           $empActReq = $statusUpdat->setAcceptedreq($_POST['accept'],$empID);
+                           $Emails= $statusUpdat->ctrlGetEmail($_POST['accept']);
 
-                        //    $requests=new PickupRequestContro();
-                        //    $requestDetailss=$requests->ctrlgetTracking($_POST['accept']);
+                           $requests=new PickupRequestContro();
+                           $requestDetailss=$requests->ctrlgetTracking($_POST['accept']);
         
-                        //    $myId = implode($requestDetailss);
+                           $myId = implode($requestDetailss);
                             
                                        
                                   
-                        //    $empActReq = $statusUpdate->setAcceptedreq(19,10);
-                        //    if($Emails){
-                        //     echo '<script type="text/javascript"> alert("You Have to go to pickup item and Email sent to customer") </script>';
-                        //         $sub='Pickup request accepted';
-                        //         $msg="Hi, your item pickup request is accepted.\n You can track with the ID:". $myId.". Kindly keep it for future reference";
-                        //         $hed='from: no-reply';
-                        //         foreach($Emails as $Emailrow){
-                        //         $sent=mail($Emailrow['customerEmail'],$sub,$msg,$hed);
-                        //         $sent=mail($Emailrow['ReceiverEmail'],$sub,$msg,$hed);
-                        //         }
+                           $empActReq = $statusUpdate->setAcceptedreq(19,10);
+                           if($Emails){
+                            echo '<script type="text/javascript"> alert("You Have to go to pickup item and Email sent to customer") </script>';
+                                $sub='Pickup request accepted';
+                                $msg="Hi, your item pickup request is accepted.\n You can track with the ID:". $myId.". Kindly keep it for future reference";
+                                $hed='from: no-reply';
+                                foreach($Emails as $Emailrow){
+                                $sent=mail($Emailrow['customerEmail'],$sub,$msg,$hed);
+                                $sent=mail($Emailrow['ReceiverEmail'],$sub,$msg,$hed);
+                                }
                                
                         
-                        // }else{
-                        //     echo '<script type="text/javascript"> alert("Some Error Occured") </script>';
-                        //    }
+                        }else{
+                            echo '<script type="text/javascript"> alert("Some Error Occured") </script>';
+                           }
                     
-                        // }
+                        }
                     
                         
                         
