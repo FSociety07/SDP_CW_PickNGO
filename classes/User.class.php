@@ -70,26 +70,6 @@ protected function VerifyEmployeeUsername($username){
   return $stmt; 
 }
 
-<<<<<<< HEAD
-// protected function DisplayUsers(){
-//   $sql="SELECT * FROM users";
-//   $stmt=$this->connect()->query($sql);      
-//   return $stmt;    
-// }
-// protected function DeleteUsers($id){
-//   $sql="DELETE FROM users WHERE id=?";
-//   $stmt=$this->connect()->prepare($sql);    
-//   return $results=$stmt->execute([$id]);      
-// }
-// protected function EditUser($id){
-//   $sql="SELECT * FROM users WHERE id=?";
-//   $stmt=$this->connect()->prepare($sql);    
-//   $stmt->execute([$id]);    
-//   $results=$stmt->fetch();
-//   return $results;
-// }
-=======
->>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
 protected function UpdateCustomer($name,$phone,$email,$password,$address,$area,$username){
   $sql="UPDATE customers SET cName=?,phoneNo=?,email=?,password=?,address=?,areaId=? WHERE username=?";
   $stmt=$this->connect()->prepare($sql);    
@@ -117,14 +97,3 @@ protected function getDstOPcenterArea($area){
 }
 
 }
-<<<<<<< HEAD
-// protected function SearchUsers($username){
-//   $sql="SELECT * FROM users WHERE UserName LIKE '%$username%' or Email LIKE '%$username%' or MobileNo LIKE '%$username%' or FirstName LIKE '%$username%' or LastName LIKE '%$username%'";
-//   $stmt=$this->connect()->prepare($sql);    
-//   $stmt->execute();    
-//   $results=$stmt->fetchAll();
-//   return $results;
-// }
-// }
-=======
->>>>>>> 1e507caf383f477b5d0b5ab410019a1c446166cc
