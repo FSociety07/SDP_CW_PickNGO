@@ -152,7 +152,7 @@ include "../includes/class-autoload.inc.php";
                                              <td> <a href="pickupreq.php?edit=<?php echo $rows["id"];?>"  class="btn btn-success">Accepted</a></td>
                                             <td><a href="" class="btn btn-success" data-toggle="modal" data-target="#modalLoginForm" name="schedule" value="<?php echo $rows["id"];?>">Schedule Time</a></td>
                                             <?php elseif($rows["status"]==2): ?>
-                                            <td><a href="deliverreq.php?del=<?php echo $rows["id"];?>" class="btn btn-info">Pickedup</a></td>
+                                            <td><a href="deliverreq.php?del=<?php echo $rows["id"];?>" name="pickedup" class="btn btn-info">Pickedup</a></td>
                                             <?php elseif($rows["status"]==3): ?>
                                             <td><button type="submit" class="btn btn-success" name="accepted" >Delivered</button></td>
                                             <?php else:?>

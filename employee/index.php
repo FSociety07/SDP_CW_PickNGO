@@ -98,7 +98,7 @@ session_start();
                                 <br>
                                 <a href="acceptreq.php"><input type="button" name="addc" id="logout-button" value="Manage Pickup" /></a>
 								<br>
-								<a href="deliver.php"> <input type="button" id="register-button" value="Manage Delivery" /> </a>
+								<a href="deliver.php"> <input type="button" id="register-button" name="delivery" value="Manage Delivery" /> </a>
                                 <br>
 								<input type="submit" name="logout" id="logout-button" value="Logout" />
 								<br>	</form>
