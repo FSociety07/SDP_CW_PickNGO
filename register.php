@@ -219,7 +219,7 @@ $(function() {
                                                         $newCustomer=new  UserContro();
                                                         $results=$newCustomer->CreateEmployee($username,$ppassword,$cname,$phoneno,$email,$address,$opcenter);
 														if($results)
-															echo '<script type="text/javascript"> alert("Registration Successful!!, Go to Login Page") </script>';
+															echo '<script type="text/javascript"> alert("Registration Successful!!, Verify with Admin to Login") </script>';
 														else
 															echo '<script type="text/javascript"> alert("Some Error Occured") </script>';
 														}
